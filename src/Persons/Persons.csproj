@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.42" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AddressRecord\AddressRecord.csproj" />
   </ItemGroup>
 
