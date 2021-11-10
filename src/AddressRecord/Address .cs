@@ -6,8 +6,8 @@ namespace AddressRecord
     {
         public enum AddressTypeEnum
         {
-            Shipping,
-            Billing
+            Shipping =0 ,
+            Billing = 1
         }
         public string AddressLine { get; set; }
         public string AddressLine2 { get; set; }

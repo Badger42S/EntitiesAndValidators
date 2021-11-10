@@ -4,72 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AddressRecord;
+using FluentValidation;
 
 namespace Validators
 {
-    public class AddressValidator
+    public class AddressValidator: AbstractValidator<Address>
     {
-        public static List<string> Validate(Address address)
+        public AddressValidator()
         {
-            List<string> validateAddressErrors = new() { };
-
-            //AddressLine required
-            if (address.AddressLine.Length == 0)
-            {
-                validateAddressErrors.Add("Address line required");
-            }
-            //AddressLine lenght
-            if (address.AddressLine.Length > 100)
-            {
-                validateAddressErrors.Add("Address line must be shorter than 100 characters");
-            }
-            //AddressLine2 lenght
-            if (address.AddressLine2.Length > 100)
-            {
-                validateAddressErrors.Add("Address line2 must be shorter than 100 characters");
-            }
-            if (!(address.AddressType == Address.AddressTypeEnum.Billing ||
-                address.AddressType == Address.AddressTypeEnum.Shipping))
-            {
-                validateAddressErrors.Add("Incorrect address type entered");
-            }
-            //City required
-            if (address.City.Length == 0)
-            {
-                validateAddressErrors.Add("City required");
-            }
-            //City lenght
-            if (address.City.Length > 50)
-            {
-                validateAddressErrors.Add("The name of the city must be shorter than 50 characters");
-            }
-            //PostalCode lenght
-            if (address.PostalCode.Length > 6)
-            {
-                validateAddressErrors.Add("Postal code must be shorter than 6 characters");
-            }
-            //PostalCode required
-            if (address.PostalCode.Length == 0)
-            {
-                validateAddressErrors.Add("Postal code required");
-            }
-            //State required
-            if (address.State.Length == 0)
-            {
-                validateAddressErrors.Add("State required");
-            }
-            //State lenght
-            if (address.State.Length > 20)
-            {
-                validateAddressErrors.Add("The name of the state should be shorter than 20 characters");
-            }
-            //entered country
-            if (!(address.Country.Equals("Canada") || address.Country.Equals("United States")))
-            {
-                validateAddressErrors.Add("Incorrect country entered. It should be Canada or United States");
-            }
-
-            return validateAddressErrors;
+            RuleFor(adress => adress.AddressLine).NotEmpty().WithMessage("Address line required");
+            RuleFor(adress => adress.AddressLine).MaximumLength(100).WithMessage("Address line must be shorter than 100 characters");
+            RuleFor(adress => adress.AddressLine2).MaximumLength(100).WithMessage("Address line2 must be shorter than 100 characters");
+            RuleFor(adress => adress.AddressType).IsInEnum().WithMessage("Incorrect address type entered");
+            RuleFor(adress => adress.City).NotEmpty().WithMessage("City required");
+            RuleFor(adress => adress.City).MaximumLength(50).WithMessage("The name of the city must be shorter than 50 characters");
+            RuleFor(adress => adress.PostalCode).NotEmpty().WithMessage("Postal code required");
+            RuleFor(adress => adress.PostalCode).MaximumLength(6).WithMessage("Postal code must be shorter than 6 characters");
+            RuleFor(adress => adress.State).NotEmpty().WithMessage("State required");
+            RuleFor(adress => adress.State).MaximumLength(20).WithMessage("The name of the state should be shorter than 20 characters");
+            RuleFor(adress => adress.Country).Matches(@"Canada|(United States)").WithMessage("Incorrect country entered. It should be Canada or United States");
         }
     }
 }

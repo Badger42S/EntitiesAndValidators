@@ -1,0 +1,9 @@
+﻿<SolutionConfiguration>
+  <Settings>
+    <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>Person.cs:src\Persons\Persons.csproj</Value>
+    </MetricsExclusionList>
+    <SolutionConfigured>True</SolutionConfigured>
+  </Settings>
+</SolutionConfiguration>
