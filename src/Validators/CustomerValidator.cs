@@ -39,7 +39,7 @@ namespace Validators
                 validateCustomerErrors.AddRange(AddressValidator.Validate(address));
             }
             //valid email
-            if (!Regex.IsMatch(customer.Email, @"\A[A-Z0-9+_.-]+@[A-Z0-9.-]+\Z"))
+            if (!Regex.IsMatch(customer.Email, @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-z]{1,3}$"))
             {
                 validateCustomerErrors.Add("Incorrect email address entered");
             }
