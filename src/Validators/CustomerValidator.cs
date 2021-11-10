@@ -34,9 +34,10 @@ namespace Validators
                 validateCustomerErrors.Add("Required at least 1 address");
             }
             //Adress list check
-
-
-
+            foreach(var address in customer.Addresses)
+            {
+                validateCustomerErrors.AddRange(AddressValidator.Validate(address));
+            }
             //valid email
             if (!Regex.IsMatch(customer.Email, @"\A[A-Z0-9+_.-]+@[A-Z0-9.-]+\Z"))
             {
