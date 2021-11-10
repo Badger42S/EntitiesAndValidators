@@ -2,9 +2,9 @@ name: Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, feat-fluent-validator ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, feat-fluent-validator ]
 
 jobs:
   build:
