@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AddressRecord;
-using Microsoft.Xrm.Sdk;
 
 namespace Persons
 {
@@ -12,12 +11,12 @@ namespace Persons
     {
         public List<Address> Addresses{get;set;}
         public List<string> Notes{get;set;}
-        public Money TotalPurchasesAmount{get;set;}
+        public double? TotalPurchasesAmount{get;set;}
         public string PhoneNumber{get;set;}
         public string Email{get;set;}
 
-        public Customer(string lastName, List<Address> addresses, List<string> notes, 
-            Money totalPurchasesAmount, string firstName = "", string phoneNumber = "", 
+        public Customer(string lastName, List<Address> addresses, List<string> notes,
+            double? totalPurchasesAmount, string firstName = "", string phoneNumber = "", 
             string email = "") :base(lastName, firstName)
         {
             Addresses = addresses;
