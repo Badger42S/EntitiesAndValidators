@@ -1,60 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Persons;
-using AddressRecord;
+﻿using Persons;
+using FluentValidation;
 
 namespace Validators
 {
-    public class CustomerValidator
+    public class CustomerValidator: AbstractValidator<Customer>
     {
-        public static List<string> Validate(Customer customer)
+        public CustomerValidator()
         {
-            List<string> validateCustomerErrors = new() { };
             //Customer check
-            //LastName lenght
-            if (customer.LastName.Length > 50)
-            {
-                validateCustomerErrors.Add("Last name must be shorter than 50 characters");
-            }
-            //LastName required
-            if (customer.LastName.Length == 0)
-            {
-                validateCustomerErrors.Add("Last name required");
-            }
-            //FirstName lenght
-            if (customer.FirstName.Length > 50)
-            {
-                validateCustomerErrors.Add("First name must be shorter than 50 characters");
-            }
-            //Adresses count
-            if (customer.Addresses.Count == 0)
-            {
-                validateCustomerErrors.Add("Required at least 1 address");
-            }
-            //Adress list check
-            foreach(var address in customer.Addresses)
-            {
-                validateCustomerErrors.AddRange(AddressValidator.Validate(address));
-            }
-            //valid email
-            if (customer.Email.Length !=0 && 
-                !Regex.IsMatch(customer.Email, @"^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]{1,5}$", RegexOptions.IgnoreCase))
-            {
-                validateCustomerErrors.Add("Incorrect email address entered");
-            }
-            //valid phone number
-            if (customer.PhoneNumber.Length != 0 && !Regex.IsMatch(customer.PhoneNumber, @"^\+?[1-9]\d{1,14}$"))
-            {
-                validateCustomerErrors.Add("Incorrect phone number entered");
-            }
-            //Notes count
-            if (customer.Notes.Count == 0)
-            {
-                validateCustomerErrors.Add("Required at least 1 note");
-            }
+            RuleFor(customer => customer.LastName).NotEmpty().WithMessage("Last name required");
+            RuleFor(customer => customer.LastName).MaximumLength(50).WithMessage("Last name must be shorter than 50 characters");
+            RuleFor(customer => customer.FirstName).MaximumLength(50).WithMessage("First name must be shorter than 50 characters");
+            RuleFor(customer => customer.Addresses).NotEmpty().WithMessage("Required at least 1 address");
 
-            return validateCustomerErrors;
+            RuleForEach(customer => customer.Addresses).SetValidator(new AddressValidator());
+
+            RuleFor(customer => customer.Email).Matches(@"^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]{1,5}$").
+                When(customer => customer.Email.Length != 0).WithMessage("Incorrect email address entered");
+            RuleFor(customer => customer.PhoneNumber).Matches(@"^\+?[1-9]\d{1,14}$").
+                When(customer => customer.PhoneNumber.Length != 0).WithMessage("Incorrect phone number entered");
+            RuleFor(customer => customer.Notes).NotEmpty().WithMessage("Required at least 1 note");
         }
     }
 }
