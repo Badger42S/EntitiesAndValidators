@@ -8,7 +8,7 @@ using Microsoft.Xrm.Sdk;
 
 namespace Persons
 {
-    class Customer : Person
+    public class Customer : Person
     {
         public List<Address> Addresses{get;set;}
         public List<string> Notes{get;set;}
@@ -17,8 +17,8 @@ namespace Persons
         public string Email{get;set;}
 
         public Customer(string lastName, List<Address> addresses, List<string> notes, 
-            Money totalPurchasesAmount, string firstName = "", string phoneNumber = "+55115525632555", 
-            string email = "ratata@gmail.com") :base(lastName, firstName)
+            Money totalPurchasesAmount, string firstName = "", string phoneNumber = "", 
+            string email = "") :base(lastName, firstName)
         {
             Addresses = addresses;
             Notes = notes;
