@@ -7,7 +7,7 @@ using AddressRecord;
 
 namespace Validators
 {
-    class AddressValidator
+    public class AddressValidator
     {
         public static List<string> Validate(Address address)
         {
@@ -28,8 +28,8 @@ namespace Validators
             {
                 validateAddressErrors.Add("Address line2 must be shorter than 100 characters");
             }
-            if (address.AddressType != Address.AddressTypeEnum.Billing ||
-                address.AddressType != Address.AddressTypeEnum.Shipping)
+            if (!(address.AddressType == Address.AddressTypeEnum.Billing ||
+                address.AddressType == Address.AddressTypeEnum.Shipping))
             {
                 validateAddressErrors.Add("Incorrect address type entered");
             }
@@ -49,6 +49,11 @@ namespace Validators
                 validateAddressErrors.Add("Postal code must be shorter than 6 characters");
             }
             //PostalCode required
+            if (address.PostalCode.Length == 0)
+            {
+                validateAddressErrors.Add("Postal code required");
+            }
+            //State required
             if (address.State.Length == 0)
             {
                 validateAddressErrors.Add("State required");
@@ -59,8 +64,7 @@ namespace Validators
                 validateAddressErrors.Add("The name of the state should be shorter than 20 characters");
             }
             //entered country
-            if (address.Country != "Canada" ||
-                address.Country != "United States")
+            if (!(address.Country.Equals("Canada") || address.Country.Equals("United States")))
             {
                 validateAddressErrors.Add("Incorrect country entered. It should be Canada or United States");
             }

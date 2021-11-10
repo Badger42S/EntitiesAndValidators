@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Persons;
 using AddressRecord;
@@ -39,7 +38,7 @@ namespace Validators
                 validateCustomerErrors.AddRange(AddressValidator.Validate(address));
             }
             //valid email
-            if (!Regex.IsMatch(customer.Email, @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-z]{1,3}$"))
+            if (!Regex.IsMatch(customer.Email, @"^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]{1,3}$", RegexOptions.IgnoreCase))
             {
                 validateCustomerErrors.Add("Incorrect email address entered");
             }
